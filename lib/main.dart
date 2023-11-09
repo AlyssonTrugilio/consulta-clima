@@ -26,7 +26,7 @@ class MyApp extends StatelessWidget {
               useMaterial3: true,
               colorScheme: darkColorScheme,
             ),
-            home: Pag1(),
+            home: const Pag1(),
           );
         });
   }

@@ -1,5 +1,6 @@
 import 'package:consultar_clima/model/apiCidade.dart';
 import 'package:consultar_clima/model/apiClima.dart';
+import 'package:consultar_clima/page/pesquisa_page.dart';
 import 'package:flutter/material.dart';
 
 import '../main.dart';
@@ -12,16 +13,15 @@ class Pag1 extends StatefulWidget {
 }
 
 class _Pag1State extends State<Pag1> {
-  ApiCidade apiDaCidade = ApiCidade();
+  List<ApiCidade> apiDaCidade = [ApiCidade(), ApiCidade()];
   ApiClima apiDoClima = ApiClima();
 
   String? nomecity;
   void nomeCidade(String valueCidade) async {
     var newApiCidade = await buscarApiCidade(valueCidade);
     setState(() {
-      apiDaCidade =
-          newApiCidade; // Atualize toda a instância da classe ApiCidade
-      nomecity = apiDaCidade.name;
+      apiDaCidade = newApiCidade;
+      nomecity = apiDaCidade[0].name;
     });
   }
 
@@ -30,8 +30,8 @@ class _Pag1State extends State<Pag1> {
   double? tempMinima;
 
   void resultadoClima() async {
-    String latDouble = apiDaCidade.lat!.toString();
-    String lonDouble = apiDaCidade.lon!.toString();
+    String latDouble = apiDaCidade[0].lat!.toString();
+    String lonDouble = apiDaCidade[0].lon!.toString();
     var newApiClima = await buscarApiClima(latDouble, lonDouble);
     setState(() {
       apiDoClima = newApiClima;
@@ -45,6 +45,8 @@ class _Pag1State extends State<Pag1> {
 
   @override
   Widget build(BuildContext context) {
+    final SearchController searchController = SearchController();
+
     return Scaffold(
       appBar: PreferredSize(
           preferredSize: const Size.fromHeight(60.0), // Altura da AppBar
@@ -61,6 +63,15 @@ class _Pag1State extends State<Pag1> {
                 'Consultar Clima',
                 style: TextStyle(fontWeight: FontWeight.bold),
               ),
+              leading: IconButton(
+                onPressed: () {
+                  showSearch(
+                    context: context,
+                    delegate: PesquisaPage(),
+                  );
+                },
+                icon: const Icon(Icons.search),
+              ),
               actions: [
                 IconButton(
                   icon: Icon(
@@ -70,7 +81,8 @@ class _Pag1State extends State<Pag1> {
                   onPressed: () {
                     setState(() {
                       isDarkMode = !isDarkMode;
-                      tema.value = isDarkMode ? ThemeMode.dark : ThemeMode.light;
+                      tema.value =
+                          isDarkMode ? ThemeMode.dark : ThemeMode.light;
                     });
                   },
                 )
@@ -82,12 +94,42 @@ class _Pag1State extends State<Pag1> {
           child: SingleChildScrollView(
             child: Column(
               children: [
-                Padding(
-                  padding: const EdgeInsets.only(top: 5),
-                  child: TextField(
+                /* Padding(
+                    padding: const EdgeInsets.only(top: 5),
+                    child: /*SearchAnchor(
+                        isFullScreen: false,
+                        searchController: searchController,
+                        builder: (context, controller) {
+                          return SearchBar(
+                            controller: controller,
+                            padding: const MaterialStatePropertyAll<EdgeInsets>(
+                                EdgeInsets.symmetric(horizontal: 16.0)),
+                            onTap: () {
+                              //controller.openView();
+                            },
+                            onChanged: (valor) {
+                              apiDaCidade = [];
+                              nomeCidade(controller.text);
+                              print("Valor da pesquisa: ${controller.value} ");
+                              controller.openView();
+                            },
+                          );
+                        },
+                        suggestionsBuilder: (context, controller) {
+                          return List<ListTile>.generate(apiDaCidade.length,
+                              (int index) {
+                            return ListTile(
+                              title: Text('${apiDaCidade[index].name}'),
+                              subtitle: Text(
+                                  '${apiDaCidade[index].state}, ${apiDaCidade[index].country}'),
+                            );
+                          });
+                        })*/
+
+                    /* TextField(
                     onChanged: (valueCidae) async {
                       nomeCidade(valueCidae);
-                      if (apiDaCidade.lat != null) {
+                      if (apiDaCidade[0].lat != null) {
                         resultadoClima();
                       }
                     },
@@ -104,8 +146,8 @@ class _Pag1State extends State<Pag1> {
                         focusedBorder: OutlineInputBorder(
                             borderSide: const BorderSide(width: 3),
                             borderRadius: BorderRadius.circular(15))),
-                  ),
-                ),
+                  ),*/
+                    ),*/
                 Padding(
                   padding: const EdgeInsets.only(top: 15),
                   child: Center(
@@ -113,10 +155,10 @@ class _Pag1State extends State<Pag1> {
                     children: [
                       Padding(
                         padding: const EdgeInsets.only(top: 40),
-                        child: (apiDaCidade.name != null &&
-                                apiDaCidade.state != null)
+                        child: (apiDaCidade[0].name != null &&
+                                apiDaCidade[0].state != null)
                             ? Text(
-                                "${apiDaCidade.name ?? ''}, ${apiDaCidade.state ?? ''}",
+                                "${apiDaCidade[0].name ?? ''}, ${apiDaCidade[0].state ?? ''}",
                                 style: const TextStyle(
                                   fontSize: 25,
                                   fontWeight: FontWeight.bold,
@@ -126,9 +168,9 @@ class _Pag1State extends State<Pag1> {
                       ),
                       Padding(
                         padding: const EdgeInsets.only(top: 10, bottom: 10),
-                        child: (apiDaCidade.country != null)
+                        child: (apiDaCidade[0].country != null)
                             ? Text(
-                                "${apiDaCidade.country}",
+                                "${apiDaCidade[0].country}",
                                 style: const TextStyle(
                                   fontSize: 25,
                                   fontWeight: FontWeight.bold,

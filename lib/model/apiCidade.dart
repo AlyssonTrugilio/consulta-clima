@@ -1,15 +1,19 @@
 import 'package:http/http.dart' as http;
 import 'dart:convert';
 
-Future<ApiCidade> buscarApiCidade(String cidade) async {
+Future<List<ApiCidade>> buscarApiCidade(String cidade) async {
   final url = Uri.parse(
       'https://api.openweathermap.org/geo/1.0/direct?q=$cidade&limit=5&lang=pt_br&APPID=c93ec169bc7918636f32dc40e73d73d8');
 
   final response = await http.get(url);
 
   if (response.statusCode == 200) {
-    final data = json.decode(response.body);
-    return ApiCidade.fromJson(data[0]);
+    List<dynamic> data = json.decode(response.body);
+    final dataEmLista = data.toList();
+    List<ApiCidade> listaDeCidades =
+        data.map((cidade) => ApiCidade.fromJson(cidade)).toList();
+    print('Lista: ${listaDeCidades.map((cidades) => cidades.toString())}');
+    return listaDeCidades;
   } else {
     throw Exception('Falha ao buscar dados de tempo');
   }
@@ -48,5 +52,10 @@ class ApiCidade {
     country = json['country'];
     state = json['state'];
     //print("Cidade: ${name}, Estado: ${state}, Pais: ${country}");
+  }
+
+  @override
+  toString() {
+    return 'Nome: $name, State: $state,  Pais: $country"\n';
   }
 }
