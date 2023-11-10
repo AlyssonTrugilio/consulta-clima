@@ -1,4 +1,4 @@
-import 'package:consultar_clima/model/apiCidade.dart';
+/*import 'package:consultar_clima/model/apiCidade.dart';
 import 'package:flutter/material.dart';
 
 class PesquisaPage extends SearchDelegate {
@@ -42,7 +42,7 @@ class PesquisaPage extends SearchDelegate {
               itemCount: snapshot.data!.length,
               itemBuilder: (context, index) {
                 ListTile(
-                  title: Text(),
+                  title: Text(''),
                 );
               });
         } else if (snapshot.hasError) {
@@ -50,8 +50,11 @@ class PesquisaPage extends SearchDelegate {
             child: Text('Erro ao pesquisar a cidade'),
           );
         }
-        return CircularProgressIndicator();
+        return Center(
+          child: CircularProgressIndicator(),
+        );
       },
     );
   }
 }
+*/

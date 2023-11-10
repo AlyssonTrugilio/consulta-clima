@@ -43,6 +43,12 @@ class _Pag1State extends State<Pag1> {
 
   bool isDarkMode = false;
 
+  chamarClima() async {
+    if (apiDaCidade[0].lat != null) {
+      resultadoClima();
+    }
+  }
+
   @override
   Widget build(BuildContext context) {
     final SearchController searchController = SearchController();
@@ -63,6 +69,7 @@ class _Pag1State extends State<Pag1> {
                 'Consultar Clima',
                 style: TextStyle(fontWeight: FontWeight.bold),
               ),
+              /*
               leading: IconButton(
                 onPressed: () {
                   showSearch(
@@ -71,7 +78,7 @@ class _Pag1State extends State<Pag1> {
                   );
                 },
                 icon: const Icon(Icons.search),
-              ),
+              ),*/
               actions: [
                 IconButton(
                   icon: Icon(
@@ -94,13 +101,14 @@ class _Pag1State extends State<Pag1> {
           child: SingleChildScrollView(
             child: Column(
               children: [
-                /* Padding(
+                Padding(
                     padding: const EdgeInsets.only(top: 5),
-                    child: /*SearchAnchor(
-                        isFullScreen: false,
+                    child: SearchAnchor(
+                        //isFullScreen: true,
                         searchController: searchController,
                         builder: (context, controller) {
                           return SearchBar(
+                            leading: Icon(Icons.search),
                             controller: controller,
                             padding: const MaterialStatePropertyAll<EdgeInsets>(
                                 EdgeInsets.symmetric(horizontal: 16.0)),
@@ -122,9 +130,14 @@ class _Pag1State extends State<Pag1> {
                               title: Text('${apiDaCidade[index].name}'),
                               subtitle: Text(
                                   '${apiDaCidade[index].state}, ${apiDaCidade[index].country}'),
+                              onTap: () {
+                                setState(() {
+                                  controller.closeView(apiDaCidade[index].name);
+                                });
+                              },
                             );
                           });
-                        })*/
+                        })
 
                     /* TextField(
                     onChanged: (valueCidae) async {
@@ -147,7 +160,7 @@ class _Pag1State extends State<Pag1> {
                             borderSide: const BorderSide(width: 3),
                             borderRadius: BorderRadius.circular(15))),
                   ),*/
-                    ),*/
+                    ),
                 Padding(
                   padding: const EdgeInsets.only(top: 15),
                   child: Center(
