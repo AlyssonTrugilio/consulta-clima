@@ -1,4 +1,4 @@
-/*import 'package:consultar_clima/model/apiCidade.dart';
+import 'package:consultar_clima/model/apiCidade.dart';
 import 'package:flutter/material.dart';
 
 class PesquisaPage extends SearchDelegate {
@@ -23,7 +23,7 @@ class PesquisaPage extends SearchDelegate {
       onPressed: () {
         close(context, '');
       },
-      icon: Icon(Icons.arrow_back),
+      icon: const Icon(Icons.arrow_back),
     );
   }
 
@@ -34,27 +34,32 @@ class PesquisaPage extends SearchDelegate {
 
   @override
   Widget buildSuggestions(BuildContext context) {
-    return FutureBuilder(
+    if (query.isEmpty) {
+      return Container();
+    }
+    return FutureBuilder<List>(
       future: buscarApiCidade(query),
       builder: (context, snapshot) {
+        print('teste do Snapshot $snapshot');
         if (snapshot.hasData) {
           return ListView.builder(
               itemCount: snapshot.data!.length,
               itemBuilder: (context, index) {
-                ListTile(
-                  title: Text(''),
+                return const ListTile(
+                  title: Text('Teste cidade'),
+                  subtitle: Text('teste de estado'),
                 );
               });
         } else if (snapshot.hasError) {
-          return Center(
+          return const Center(
             child: Text('Erro ao pesquisar a cidade'),
           );
         }
-        return Center(
+
+        return const Center(
           child: CircularProgressIndicator(),
         );
       },
     );
   }
 }
-*/

@@ -69,7 +69,6 @@ class _Pag1State extends State<Pag1> {
                 'Consultar Clima',
                 style: TextStyle(fontWeight: FontWeight.bold),
               ),
-              /*
               leading: IconButton(
                 onPressed: () {
                   showSearch(
@@ -78,7 +77,7 @@ class _Pag1State extends State<Pag1> {
                   );
                 },
                 icon: const Icon(Icons.search),
-              ),*/
+              ),
               actions: [
                 IconButton(
                   icon: Icon(

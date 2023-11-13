@@ -51,7 +51,7 @@ class ApiCidade {
     lon = json['lon'];
     country = json['country'];
     state = json['state'];
-    //print("Cidade: ${name}, Estado: ${state}, Pais: ${country}");
+    print("Cidade: ${name}, Estado: ${state}, Pais: ${country}");
   }
 
   @override
