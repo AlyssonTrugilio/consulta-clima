@@ -50,7 +50,8 @@ class PesquisaPage extends SearchDelegate {
               itemBuilder: (context, index) {
                 return ListTile(
                   title: Text(apiDaCidade[index].name.toString()),
-                  subtitle: Text(apiDaCidade[index].state.toString()),
+                  subtitle: Text(
+                      '${apiDaCidade[index].state.toString()}, ${apiDaCidade[index].country.toString()}'),
                   onTap: () {
                     apiCidadeSelecionada(apiDaCidade[index]);
                     close(context, '');
