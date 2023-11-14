@@ -12,7 +12,6 @@ Future<List<ApiCidade>> buscarApiCidade(String cidade) async {
     final dataEmLista = data.toList();
     List<ApiCidade> listaDeCidades =
         data.map((cidade) => ApiCidade.fromJson(cidade)).toList();
-    print('Lista: ${listaDeCidades.map((cidades) => cidades.toString())}');
     return listaDeCidades;
   } else {
     throw Exception('Falha ao buscar dados de tempo');
@@ -51,7 +50,6 @@ class ApiCidade {
     lon = json['lon'];
     country = json['country'];
     state = json['state'];
-    print("Cidade: ${name}, Estado: ${state}, Pais: ${country}");
   }
 
   @override

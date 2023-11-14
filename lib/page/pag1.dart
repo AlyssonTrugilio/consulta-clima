@@ -13,15 +13,20 @@ class Pag1 extends StatefulWidget {
 }
 
 class _Pag1State extends State<Pag1> {
-  List<ApiCidade> apiDaCidade = [ApiCidade(), ApiCidade()];
+  ApiCidade? apiDaCidade = ApiCidade();
   ApiClima apiDoClima = ApiClima();
 
   String? nomecity;
   void nomeCidade(String valueCidade) async {
-    var newApiCidade = await buscarApiCidade(valueCidade);
     setState(() {
-      apiDaCidade = newApiCidade;
-      nomecity = apiDaCidade[0].name;
+      nomecity = apiDaCidade?.name;
+    });
+  }
+
+  void resultadoSelecionado(ApiCidade apiCidade) async {
+    setState(() {
+      apiDaCidade = apiCidade;
+      resultadoClima();
     });
   }
 
@@ -30,8 +35,8 @@ class _Pag1State extends State<Pag1> {
   double? tempMinima;
 
   void resultadoClima() async {
-    String latDouble = apiDaCidade[0].lat!.toString();
-    String lonDouble = apiDaCidade[0].lon!.toString();
+    String latDouble = apiDaCidade?.lat!.toString() ?? '';
+    String lonDouble = apiDaCidade?.lon!.toString() ?? '';
     var newApiClima = await buscarApiClima(latDouble, lonDouble);
     setState(() {
       apiDoClima = newApiClima;
@@ -44,15 +49,13 @@ class _Pag1State extends State<Pag1> {
   bool isDarkMode = false;
 
   chamarClima() async {
-    if (apiDaCidade[0].lat != null) {
+    if (apiDaCidade?.lat != null) {
       resultadoClima();
     }
   }
 
   @override
   Widget build(BuildContext context) {
-    final SearchController searchController = SearchController();
-
     return Scaffold(
       appBar: PreferredSize(
           preferredSize: const Size.fromHeight(60.0), // Altura da AppBar
@@ -73,7 +76,7 @@ class _Pag1State extends State<Pag1> {
                 onPressed: () {
                   showSearch(
                     context: context,
-                    delegate: PesquisaPage(),
+                    delegate: PesquisaPage(resultadoSelecionado),
                   );
                 },
                 icon: const Icon(Icons.search),
@@ -101,76 +104,16 @@ class _Pag1State extends State<Pag1> {
             child: Column(
               children: [
                 Padding(
-                    padding: const EdgeInsets.only(top: 5),
-                    child: SearchAnchor(
-                        //isFullScreen: true,
-                        searchController: searchController,
-                        builder: (context, controller) {
-                          return SearchBar(
-                            leading: Icon(Icons.search),
-                            controller: controller,
-                            padding: const MaterialStatePropertyAll<EdgeInsets>(
-                                EdgeInsets.symmetric(horizontal: 16.0)),
-                            onTap: () {
-                              //controller.openView();
-                            },
-                            onChanged: (valor) {
-                              apiDaCidade = [];
-                              nomeCidade(controller.text);
-                              print("Valor da pesquisa: ${controller.value} ");
-                              controller.openView();
-                            },
-                          );
-                        },
-                        suggestionsBuilder: (context, controller) {
-                          return List<ListTile>.generate(apiDaCidade.length,
-                              (int index) {
-                            return ListTile(
-                              title: Text('${apiDaCidade[index].name}'),
-                              subtitle: Text(
-                                  '${apiDaCidade[index].state}, ${apiDaCidade[index].country}'),
-                              onTap: () {
-                                setState(() {
-                                  controller.closeView(apiDaCidade[index].name);
-                                });
-                              },
-                            );
-                          });
-                        })
-
-                    /* TextField(
-                    onChanged: (valueCidae) async {
-                      nomeCidade(valueCidae);
-                      if (apiDaCidade[0].lat != null) {
-                        resultadoClima();
-                      }
-                    },
-                    decoration: InputDecoration(
-                        label: const Text('Digite a cidade'),
-                        labelStyle:
-                            const TextStyle(fontWeight: FontWeight.bold),
-                        suffixIcon: const Icon(Icons.search),
-                        enabledBorder: OutlineInputBorder(
-                            borderSide: const BorderSide(
-                              width: 3,
-                            ),
-                            borderRadius: BorderRadius.circular(15)),
-                        focusedBorder: OutlineInputBorder(
-                            borderSide: const BorderSide(width: 3),
-                            borderRadius: BorderRadius.circular(15))),
-                  ),*/
-                    ),
-                Padding(
                   padding: const EdgeInsets.only(top: 15),
                   child: Center(
                       child: Column(
                     children: [
                       Padding(
                         padding: const EdgeInsets.only(top: 40),
-                        child: (apiDaCidade[0].name != null &&
-                                apiDaCidade[0].state != null)
+                        child: (apiDaCidade?.name != null &&
+                                apiDaCidade?.state != null)
                             ? Text(
-                                "${apiDaCidade[0].name ?? ''}, ${apiDaCidade[0].state ?? ''}",
+                                "${apiDaCidade?.name ?? ''}, ${apiDaCidade?.state ?? ''}",
                                 style: const TextStyle(
                                   fontSize: 25,
                                   fontWeight: FontWeight.bold,
@@ -180,9 +123,9 @@ class _Pag1State extends State<Pag1> {
                       ),
                       Padding(
                         padding: const EdgeInsets.only(top: 10, bottom: 10),
-                        child: (apiDaCidade[0].country != null)
+                        child: (apiDaCidade?.country != null)
                             ? Text(
-                                "${apiDaCidade[0].country}",
+                                "${apiDaCidade?.country}",
                                 style: const TextStyle(
                                   fontSize: 25,
                                   fontWeight: FontWeight.bold,

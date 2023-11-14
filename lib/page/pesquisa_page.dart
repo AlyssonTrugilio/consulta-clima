@@ -2,9 +2,12 @@ import 'package:consultar_clima/model/apiCidade.dart';
 import 'package:flutter/material.dart';
 
 class PesquisaPage extends SearchDelegate {
+  Function(ApiCidade apiCidade) apiCidadeSelecionada;
+
+  PesquisaPage(this.apiCidadeSelecionada);
+
   @override
   String get searchFieldLabel => 'Digite a cidade';
-  ApiCidade apiCidade = ApiCidade();
   @override
   List<Widget>? buildActions(BuildContext context) {
     return [
@@ -40,14 +43,18 @@ class PesquisaPage extends SearchDelegate {
     return FutureBuilder<List>(
       future: buscarApiCidade(query),
       builder: (context, snapshot) {
-        print('teste do Snapshot $snapshot');
         if (snapshot.hasData) {
+          final apiDaCidade = snapshot.data as List<ApiCidade>;
           return ListView.builder(
               itemCount: snapshot.data!.length,
               itemBuilder: (context, index) {
-                return const ListTile(
-                  title: Text('Teste cidade'),
-                  subtitle: Text('teste de estado'),
+                return ListTile(
+                  title: Text(apiDaCidade[index].name.toString()),
+                  subtitle: Text(apiDaCidade[index].state.toString()),
+                  onTap: () {
+                    apiCidadeSelecionada(apiDaCidade[index]);
+                    close(context, '');
+                  },
                 );
               });
         } else if (snapshot.hasError) {

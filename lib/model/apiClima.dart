@@ -3,7 +3,7 @@ import 'dart:convert';
 
 Future<ApiClima> buscarApiClima(String latitude, String longitude) async {
   final urlClima = Uri.parse(
-      'https://api.openweathermap.org/data/2.5/weather?lat=$latitude&lon=$longitude&APPID=c93ec169bc7918636f32dc40e73d73d8&units=metric');
+      'https://api.openweathermap.org/data/2.5/weather?lat=$latitude&lon=$longitude&lang=pt_br&APPID=c93ec169bc7918636f32dc40e73d73d8&units=metric');
 
   final responseClima = await http.get(urlClima);
   if (responseClima.statusCode == 200) {
