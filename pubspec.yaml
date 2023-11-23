@@ -1,48 +1,18 @@
 name: consultar_clima
-description:  'Consult weather now'
-publish_to: 'none' 
+description: 'Consult weather now'
+publish_to: 'none'
 version: 0.0.1
 environment:
   sdk: '>=3.2.0 <4.0.0'
 dependencies:
+  cupertino_icons: ^1.0.2
   flutter:
     sdk: flutter
-  cupertino_icons: ^1.0.2
+  http: ^1.1.0
 dev_dependencies:
+  flutter_lints: ^3.0.1
   flutter_test:
     sdk: flutter
-  flutter_lints: ^3.0.1
 flutter:
 
   uses-material-design: true
-
-  
-  
-  
-  
-
-  
-  
-
-  
-  
-
-  
-  
-  
-  
-  
-  
-  
-  
-  
-  
-  
-  
-  
-  
-  
-  
-  
-  
-  
