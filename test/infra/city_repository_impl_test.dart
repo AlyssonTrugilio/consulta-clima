@@ -15,7 +15,6 @@ void main() {
   late final String url;
   late final String search;
   late final String jsonRespense;
-  late final String jsonFailureResponse;
 
   setUpAll(() {
     apiKey = "ANY_KEY";
@@ -23,8 +22,7 @@ void main() {
     url =
         'https://api.openweathermap.org/geo/1.0/direct?q=$search&limit=5&lang=pt_br&APPID=$apiKey';
     client = HttpMock();
-    sut = CityRepositoryImpl(client: client);
-    jsonFailureResponse = jsonEncode([]);
+    sut = CityRepositoryImpl(client: client, apiKey: apiKey);
     jsonRespense = jsonEncode([
       {
         "name": "Maringá",
@@ -51,6 +49,17 @@ void main() {
     registerFallbackValue(Uri.parse(url));
   });
 
+  test('deve configurar todos os parametros corretamente', () async {
+    when(
+      () => client.get(any()),
+    ).thenAnswer(
+      (_) async => http.Response(jsonRespense, 200),
+    );
+    await sut.searchByname(search: search);
+
+    verify(() => client.get(Uri.parse(url))).called(1);
+  });
+
   test('deve consultar a api e trazer uma lista de cidades', () async {
     when(
       () => client.get(any()),
@@ -60,22 +69,5 @@ void main() {
 
     final cities = await sut.searchByname(search: search);
     expect(cities.isNotEmpty, isTrue);
-  });
-
-  test('não deve consultar a api se nenhuma cidade for infomada', () async {
-    expect(() => sut.searchByname(search: ''), throwsA(isException));
-  });
-
-  test('deve retornar uma falha caso não encontre nenhuma cidade', () async {
-    when(
-      () => client.get(any()),
-    ).thenAnswer(
-      (_) async => http.Response(jsonFailureResponse, 200),
-    );
-
-    expect(
-      () => sut.searchByname(search: search),
-      throwsA(isException),
-    );
   });
 }

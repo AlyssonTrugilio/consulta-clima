@@ -12,7 +12,7 @@ class AppWidget extends StatelessWidget {
       theme: ThemeData(
           useMaterial3: true,
           colorScheme: ColorScheme.fromSeed(seedColor: Colors.deepOrange)),
-      home: const SplashPage(),
+      home: const SearchCityPage(),
     );
   }
 }
