@@ -4,8 +4,8 @@ abstract interface class CityState {
   const CityState();
 }
 
-class InitialityState extends CityState {
-  const InitialityState();
+class InitialCityState extends CityState {
+  const InitialCityState();
 }
 
 class LoadingCityState extends CityState {
