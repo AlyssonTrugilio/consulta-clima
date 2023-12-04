@@ -1,3 +1,3 @@
-export 'city_repository.dart';
-export 'city_entity.dart';
+export 'repositories/repositories.dart';
+export 'entities/entities.dart';
 export 'search_city_usecase.dart';

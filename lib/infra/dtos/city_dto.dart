@@ -1,6 +1,6 @@
 import 'dart:convert';
 
-import '../domain/domain.dart';
+import '../../domain/domain.dart';
 
 extension CityDto on CityEntity {
   static List<CityEntity> fromJson(dynamic json) {

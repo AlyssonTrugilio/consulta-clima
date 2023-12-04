@@ -1,6 +1,6 @@
 import 'dart:convert';
 
-import 'package:consultar_clima/infra/city_repository_impl.dart';
+import 'package:consultar_clima/infra/infra.dart';
 import 'package:flutter_test/flutter_test.dart';
 import 'package:http/http.dart' as http;
 import 'package:consultar_clima/domain/domain.dart';
@@ -14,15 +14,17 @@ void main() {
   late final http.Client client;
   late final String url;
   late final String search;
+  late final String baseUrl;
   late final String jsonRespense;
 
   setUpAll(() {
     apiKey = "ANY_KEY";
     search = "ANY_SEARCH";
+    baseUrl = "ANY_URL";
     url =
         'https://api.openweathermap.org/geo/1.0/direct?q=$search&limit=5&lang=pt_br&APPID=$apiKey';
     client = HttpMock();
-    sut = CityRepositoryImpl(client: client, apiKey: apiKey);
+    sut = CityRepositoryImpl(client: client, apiKey: apiKey, baseUrl: baseUrl);
     jsonRespense = jsonEncode([
       {
         "name": "Maringá",
