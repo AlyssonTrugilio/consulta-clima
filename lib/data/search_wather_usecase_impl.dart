@@ -15,15 +15,11 @@ class SearchWeatherUseCaseImpl implements SearchWeatherUseCase {
       required double latitude,
       required double longitude}) async {
     if (latitude == 0 || longitude == 0) {
-      throw Exception(const Center(
-        child: Text('Nenhuma localização informada.'),
-      ));
+      throw Exception('Nenhuma localização informada.');
     }
 
     if (city.isEmpty) {
-      throw Exception(const Center(
-        child: Text('Nenhuma cidade válida informada'),
-      ));
+      throw Exception('Nenhuma cidade válida informada');
     }
 
     final weather = await repository.searchByLocation(

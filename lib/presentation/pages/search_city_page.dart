@@ -35,6 +35,7 @@ class _SearchCityPageState extends State<SearchCityPage> {
         padding: const EdgeInsets.all(20),
         child: SingleChildScrollView(
           child: Column(
+            crossAxisAlignment: CrossAxisAlignment.center,
             children: [
               Text(
                 'Consultar Clima',

@@ -9,9 +9,11 @@ class AppWidget extends StatelessWidget {
   Widget build(BuildContext context) {
     return MaterialApp(
       title: 'Weather now',
+      debugShowCheckedModeBanner: false,
       theme: ThemeData(
           useMaterial3: true,
-          colorScheme: ColorScheme.fromSeed(seedColor: Colors.deepOrange)),
+          colorScheme: ColorScheme.fromSeed(
+              seedColor: Colors.deepOrange, brightness: Brightness.dark)),
       home: const SearchCityPage(),
     );
   }
