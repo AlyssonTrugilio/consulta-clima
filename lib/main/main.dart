@@ -1,1 +1,1 @@
-export 'factories/city_bloc_factory.dart';
+export 'factories/bloc/city_bloc_factory.dart';
