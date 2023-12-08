@@ -1,7 +1,7 @@
 import 'package:bloc/bloc.dart';
-import '../../domain/domain.dart';
+import '../../../domain/domain.dart';
 
-part "city_event.dart";
+part 'city_event.dart';
 part 'city_state.dart';
 
 class CityBloc extends Bloc<CityEvent, CityState> {

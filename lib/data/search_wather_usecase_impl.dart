@@ -1,5 +1,3 @@
-import 'package:flutter/material.dart';
-
 import '../domain/domain.dart';
 
 class SearchWeatherUseCaseImpl implements SearchWeatherUseCase {

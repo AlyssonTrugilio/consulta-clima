@@ -1,4 +1,4 @@
-part of "city_bloc.dart";
+part of 'city_bloc.dart';
 
 abstract interface class CityEvent {
   const CityEvent();

@@ -1,6 +1,6 @@
 import 'package:flutter/material.dart';
 import '../../main/main.dart';
-import '../bloc/city_bloc.dart';
+import '../bloc/city_bloc/city_bloc.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
 
 class SearchCityPage extends StatefulWidget {
