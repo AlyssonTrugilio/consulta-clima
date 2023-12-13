@@ -59,6 +59,7 @@ class _SearchCityPageState extends State<SearchCityPage> {
                       cityBloc.add(SearchChanged(value: value));
                     },
                     decoration: InputDecoration(
+                        border: const OutlineInputBorder(),
                         hintText: "Digite uma cidade",
                         suffixIcon: IconButton(
                           icon: const Icon(Icons.close),
@@ -102,7 +103,11 @@ class _SearchCityPageState extends State<SearchCityPage> {
                       },
                       itemBuilder: (context, index) {
                         return ListTile(
-                          onTap: () {},
+                          onTap: () {
+                            Navigator.of(context).pushReplacementNamed(
+                                '/weather-detail',
+                                arguments: state.cities[index]);
+                          },
                           title: Text(state.cities[index].name),
                           subtitle: Text(state.cities[index].state),
                         );

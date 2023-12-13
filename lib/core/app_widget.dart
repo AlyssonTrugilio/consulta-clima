@@ -1,5 +1,6 @@
 import 'package:flutter/material.dart';
 
+import '../domain/domain.dart';
 import '../presentation/presentation.dart';
 
 class AppWidget extends StatelessWidget {
@@ -14,7 +15,27 @@ class AppWidget extends StatelessWidget {
           useMaterial3: true,
           colorScheme: ColorScheme.fromSeed(
               seedColor: Colors.deepOrange, brightness: Brightness.dark)),
-      home: const SearchCityPage(),
+      initialRoute: '/splash',
+      onGenerateRoute: (setting) {
+        switch (setting.name) {
+          case '/splash':
+            return MaterialPageRoute(
+              builder: (context) => const SplashPage(),
+            );
+          case '/':
+            return MaterialPageRoute(
+              builder: (context) => const SearchCityPage(),
+            );
+          case '/weather-detail':
+            return MaterialPageRoute(
+              builder: (context) => WeatherDatailPage(
+                city: setting.arguments as CityEntity,
+              ),
+            );
+          default:
+            return null;
+        }
+      },
     );
   }
 }

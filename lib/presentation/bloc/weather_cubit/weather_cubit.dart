@@ -1,7 +1,6 @@
 import 'package:bloc/bloc.dart';
 import 'package:consultar_clima/domain/domain.dart';
 import 'package:flutter/material.dart';
-import 'package:meta/meta.dart';
 
 part 'weather_state.dart';
 
