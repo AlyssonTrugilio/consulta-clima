@@ -1,8 +1,11 @@
+import 'dart:convert';
+
 import '../../domain/domain.dart';
 
 extension WeatherDto on WeatherEntity {
   static WeatherEntity fromJson(dynamic data) {
-    final mainMap = data['temp'];
+    final dataMap = jsonDecode(data);
+    final mainMap = dataMap['main'];
 
     return WeatherEntity(
       temperature: (mainMap['temp'] as num).toDouble(),

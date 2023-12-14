@@ -15,14 +15,16 @@ class WeatherCubit extends Cubit<WeatherState> {
     required double latitude,
     required double longitude,
   }) async {
+    emit(const WeatherLoading());
+
     try {
-      emit(const WeatherLoading());
       final response = await searchWeather(
-          city: cityName,
-          state: stateName,
-          country: countryName,
-          latitude: latitude,
-          longitude: longitude);
+        city: cityName,
+        state: stateName,
+        country: countryName,
+        latitude: latitude,
+        longitude: longitude,
+      );
       weather = response;
       emit(WeatherSuccess(weather: response));
     } catch (e) {

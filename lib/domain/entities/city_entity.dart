@@ -12,4 +12,6 @@ class CityEntity {
     required this.country,
     required this.state,
   });
+
+  String get addressFull => '$name, $state - $country';
 }

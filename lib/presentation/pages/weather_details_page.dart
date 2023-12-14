@@ -44,8 +44,8 @@ class _WeatherDatailPageState extends State<WeatherDatailPage> {
       value: cubit,
       child: Scaffold(
         appBar: AppBar(
-          title: const Text("Quinta do sol - Paraná"),
           centerTitle: true,
+          title: const CityNameWidget(),
         ),
         body: Center(
           child: Center(
@@ -73,16 +73,20 @@ class _WeatherDatailPageState extends State<WeatherDatailPage> {
                           mainAxisAlignment: MainAxisAlignment.spaceEvenly,
                           children: [
                             TemperatureDetailWidget(title: 'Minima', value: 20),
-                            TemperatureDetailWidget(
-                                title: 'Humidade', value: 20)
+                            TemperatureDetailWidget(title: 'Maxima', value: 20)
                           ],
                         ),
+                        Divider(),
                         Row(
                           mainAxisAlignment: MainAxisAlignment.spaceEvenly,
                           children: [
-                            TemperatureDetailWidget(title: 'Minima', value: 20),
                             TemperatureDetailWidget(
-                                title: 'Humidade', value: 20)
+                                title: 'Sensação', value: 20),
+                            TemperatureDetailWidget(
+                              title: 'Humidade',
+                              value: 20,
+                              type: "%",
+                            )
                           ],
                         )
                       ],
@@ -93,19 +97,38 @@ class _WeatherDatailPageState extends State<WeatherDatailPage> {
           child: const Icon(Icons.keyboard_arrow_up),
         ),
         bottomNavigationBar: const BottomAppBar(
+          elevation: 8,
           child: Row(
             mainAxisAlignment: MainAxisAlignment.spaceAround,
             children: [
               TemperatureDetailWidget(
-                title: 'Sensação',
+                title: 'Máxima',
                 value: 32,
               ),
-              TemperatureDetailWidget(title: 'Máxima', value: 34),
               TemperatureDetailWidget(title: 'Mínima', value: 35)
             ],
           ),
         ),
       ),
+    );
+  }
+}
+
+class CityNameWidget extends StatelessWidget {
+  const CityNameWidget({super.key});
+
+  @override
+  Widget build(BuildContext context) {
+    return BlocBuilder<WeatherCubit, WeatherState>(
+      builder: (context, state) {
+        if (state is WeatherLoading) {
+          return const LinearProgressIndicator();
+        }
+        if (state is WeatherSuccess) {
+          return Text(state.weather.city!.addressFull);
+        }
+        return const SizedBox.shrink();
+      },
     );
   }
 }
