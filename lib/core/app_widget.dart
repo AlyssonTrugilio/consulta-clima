@@ -28,7 +28,7 @@ class AppWidget extends StatelessWidget {
             );
           case '/weather-detail':
             return MaterialPageRoute(
-              builder: (context) => WeatherDatailPage(
+              builder: (context) => WeatherDetailPage(
                 city: setting.arguments as CityEntity,
               ),
             );

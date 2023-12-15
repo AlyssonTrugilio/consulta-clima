@@ -1,33 +1,34 @@
-import 'package:consultar_clima/domain/entities/entities.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
+import '../../domain/entities/entities.dart';
 import '../../main/factories/factories.dart';
 import '../bloc/bloc.dart';
 
-class WeatherDatailPage extends StatefulWidget {
+class WeatherDetailPage extends StatefulWidget {
   final CityEntity city;
 
-  const WeatherDatailPage({
+  const WeatherDetailPage({
     super.key,
     required this.city,
   });
 
   @override
-  State<WeatherDatailPage> createState() => _WeatherDatailPageState();
+  State<WeatherDetailPage> createState() => _WeatherDetailPageState();
 }
 
-class _WeatherDatailPageState extends State<WeatherDatailPage> {
+class _WeatherDetailPageState extends State<WeatherDetailPage> {
   late final WeatherCubit cubit;
 
   @override
   void initState() {
     cubit = weatherCubitFactory();
     cubit.initial(
-        cityName: widget.city.name,
-        stateName: widget.city.state,
-        countryName: widget.city.country,
-        latitude: widget.city.latitude,
-        longitude: widget.city.longitude);
+      cityName: widget.city.name,
+      stateName: widget.city.state,
+      countryName: widget.city.country,
+      latitude: widget.city.latitude,
+      longitude: widget.city.longitude,
+    );
     super.initState();
   }
 
@@ -39,7 +40,6 @@ class _WeatherDatailPageState extends State<WeatherDatailPage> {
 
   @override
   Widget build(BuildContext context) {
-    final textTheme = Theme.of(context).textTheme;
     return BlocProvider.value(
       value: cubit,
       child: Scaffold(
@@ -47,54 +47,56 @@ class _WeatherDatailPageState extends State<WeatherDatailPage> {
           centerTitle: true,
           title: const CityNameWidget(),
         ),
-        body: Center(
-          child: Center(
-            child: RichText(
-              text: TextSpan(
-                  text: '32',
-                  style: textTheme.displayLarge,
-                  children: [TextSpan(text: 'ºC', style: textTheme.bodyLarge)]),
-            ),
-          ),
+        body: const Center(
+          child: CurrentTempWidget(),
         ),
-        floatingActionButtonLocation:
-            FloatingActionButtonLocation.miniCenterDocked,
+        floatingActionButtonLocation: FloatingActionButtonLocation.centerDocked,
         floatingActionButton: FloatingActionButton(
+          tooltip: 'Mais informações',
+          child: const Icon(Icons.arrow_upward_outlined),
           onPressed: () {
             showModalBottomSheet(
-                context: context,
-                builder: (context) {
-                  return const Padding(
-                    padding: EdgeInsets.symmetric(vertical: 30),
-                    child: Column(
-                      mainAxisSize: MainAxisSize.min,
-                      children: [
-                        Row(
-                          mainAxisAlignment: MainAxisAlignment.spaceEvenly,
-                          children: [
-                            TemperatureDetailWidget(title: 'Minima', value: 20),
-                            TemperatureDetailWidget(title: 'Maxima', value: 20)
-                          ],
-                        ),
-                        Divider(),
-                        Row(
-                          mainAxisAlignment: MainAxisAlignment.spaceEvenly,
-                          children: [
-                            TemperatureDetailWidget(
-                                title: 'Sensação', value: 20),
-                            TemperatureDetailWidget(
-                              title: 'Humidade',
-                              value: 20,
-                              type: "%",
-                            )
-                          ],
-                        )
-                      ],
-                    ),
-                  );
-                });
+              context: context,
+              builder: (context) {
+                return const Padding(
+                  padding: EdgeInsets.symmetric(vertical: 30),
+                  child: Column(
+                    mainAxisSize: MainAxisSize.min,
+                    children: [
+                      Row(
+                        mainAxisAlignment: MainAxisAlignment.spaceEvenly,
+                        children: [
+                          TemperatureDetailWidget(
+                            title: 'Mínima',
+                            value: 19,
+                          ),
+                          TemperatureDetailWidget(
+                            title: 'Máxima',
+                            value: 45,
+                          ),
+                        ],
+                      ),
+                      Divider(),
+                      Row(
+                        mainAxisAlignment: MainAxisAlignment.spaceEvenly,
+                        children: [
+                          TemperatureDetailWidget(
+                            title: 'Sensação',
+                            value: 49,
+                          ),
+                          TemperatureDetailWidget(
+                            title: 'Humidade',
+                            value: 80,
+                            type: '%',
+                          ),
+                        ],
+                      ),
+                    ],
+                  ),
+                );
+              },
+            );
           },
-          child: const Icon(Icons.keyboard_arrow_up),
         ),
         bottomNavigationBar: const BottomAppBar(
           elevation: 8,
@@ -102,14 +104,57 @@ class _WeatherDatailPageState extends State<WeatherDatailPage> {
             mainAxisAlignment: MainAxisAlignment.spaceAround,
             children: [
               TemperatureDetailWidget(
-                title: 'Máxima',
-                value: 32,
+                title: 'Mínima',
+                value: 19,
               ),
-              TemperatureDetailWidget(title: 'Mínima', value: 35)
+              TemperatureDetailWidget(
+                title: 'Máxima',
+                value: 45,
+              ),
             ],
           ),
         ),
       ),
+    );
+  }
+}
+
+class CurrentTempWidget extends StatelessWidget {
+  const CurrentTempWidget({
+    super.key,
+  });
+
+  @override
+  Widget build(BuildContext context) {
+    final textTheme = Theme.of(context).textTheme;
+
+    return BlocBuilder<WeatherCubit, WeatherState>(
+      builder: (context, state) {
+        if (state is WeatherSuccess) {
+          return RichText(
+            text: TextSpan(
+              text: state.weather.temperature.toStringAsFixed(0),
+              style: textTheme.displayLarge,
+              children: [
+                TextSpan(
+                  text: '°C',
+                  style: textTheme.bodyLarge,
+                ),
+              ],
+            ),
+          );
+        }
+
+        if (state is WeatherLoading) {
+          return const CircularProgressIndicator();
+        }
+
+        if (state is WeatherFailure) {
+          return Text(state.message);
+        }
+
+        return const SizedBox.shrink();
+      },
     );
   }
 }
@@ -121,13 +166,11 @@ class CityNameWidget extends StatelessWidget {
   Widget build(BuildContext context) {
     return BlocBuilder<WeatherCubit, WeatherState>(
       builder: (context, state) {
-        if (state is WeatherLoading) {
-          return const LinearProgressIndicator();
-        }
-        if (state is WeatherSuccess) {
-          return Text(state.weather.city!.addressFull);
-        }
-        return const SizedBox.shrink();
+        return switch (state) {
+          WeatherLoading() => const LinearProgressIndicator(),
+          WeatherSuccess(:final weather) => Text(weather.city!.addressFull),
+          WeatherFailure(:final message) => Text(message),
+        };
       },
     );
   }
@@ -137,28 +180,36 @@ class TemperatureDetailWidget extends StatelessWidget {
   final String title;
   final double value;
   final String? type;
+
   const TemperatureDetailWidget({
     super.key,
     required this.title,
     required this.value,
-    this.type,
+    this.type = '°C',
   });
 
   @override
   Widget build(BuildContext context) {
     final textTheme = Theme.of(context).textTheme;
+
     return Column(
       children: [
         Text(
           title,
-          style: Theme.of(context).textTheme.bodySmall,
+          style: textTheme.bodySmall,
         ),
         Text.rich(
-            TextSpan(
-              text: value.toStringAsFixed(0),
-              children: [TextSpan(text: type, style: textTheme.bodySmall)],
-            ),
-            style: textTheme.bodyMedium)
+          TextSpan(
+            text: value.toStringAsFixed(0),
+            children: [
+              TextSpan(
+                text: type,
+                style: textTheme.bodySmall,
+              ),
+            ],
+          ),
+          style: textTheme.titleMedium,
+        ),
       ],
     );
   }
