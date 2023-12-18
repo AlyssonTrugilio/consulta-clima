@@ -1,8 +1,11 @@
+import 'package:consultar_clima/presentation/pages/widgets/temperature_detail_widget.dart';
+import 'package:consultar_clima/presentation/pages/widgets/value_type_enum.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
 import '../../domain/entities/entities.dart';
 import '../../main/factories/factories.dart';
 import '../bloc/bloc.dart';
+import 'widgets/city_name_widgets.dart';
 
 class WeatherDetailPage extends StatefulWidget {
   final CityEntity city;
@@ -48,7 +51,7 @@ class _WeatherDetailPageState extends State<WeatherDetailPage> {
           title: const CityNameWidget(),
         ),
         body: const Center(
-          child: CurrentTempWidget(),
+          child: TemperatureDetailWidget(valueType: ValueType.currentTemp),
         ),
         floatingActionButtonLocation: FloatingActionButtonLocation.centerDocked,
         floatingActionButton: FloatingActionButton(
@@ -58,40 +61,34 @@ class _WeatherDetailPageState extends State<WeatherDetailPage> {
             showModalBottomSheet(
               context: context,
               builder: (context) {
-                return const Padding(
-                  padding: EdgeInsets.symmetric(vertical: 30),
-                  child: Column(
-                    mainAxisSize: MainAxisSize.min,
-                    children: [
-                      Row(
-                        mainAxisAlignment: MainAxisAlignment.spaceEvenly,
-                        children: [
-                          TemperatureDetailWidget(
-                            title: 'Mínima',
-                            value: 19,
-                          ),
-                          TemperatureDetailWidget(
-                            title: 'Máxima',
-                            value: 45,
-                          ),
-                        ],
-                      ),
-                      Divider(),
-                      Row(
-                        mainAxisAlignment: MainAxisAlignment.spaceEvenly,
-                        children: [
-                          TemperatureDetailWidget(
-                            title: 'Sensação',
-                            value: 49,
-                          ),
-                          TemperatureDetailWidget(
-                            title: 'Humidade',
-                            value: 80,
-                            type: '%',
-                          ),
-                        ],
-                      ),
-                    ],
+                return BlocProvider.value(
+                  value: cubit,
+                  child: const Padding(
+                    padding: EdgeInsets.symmetric(vertical: 30),
+                    child: Column(
+                      mainAxisSize: MainAxisSize.min,
+                      children: [
+                        Row(
+                          mainAxisAlignment: MainAxisAlignment.spaceEvenly,
+                          children: [
+                            TemperatureDetailWidget(
+                                valueType: ValueType.minTemperature),
+                            TemperatureDetailWidget(
+                                valueType: ValueType.maxTemperature),
+                          ],
+                        ),
+                        Divider(),
+                        Row(
+                          mainAxisAlignment: MainAxisAlignment.spaceEvenly,
+                          children: [
+                            TemperatureDetailWidget(
+                                valueType: ValueType.thermalSensation),
+                            TemperatureDetailWidget(
+                                valueType: ValueType.humidity)
+                          ],
+                        ),
+                      ],
+                    ),
                   ),
                 );
               },
@@ -103,114 +100,12 @@ class _WeatherDetailPageState extends State<WeatherDetailPage> {
           child: Row(
             mainAxisAlignment: MainAxisAlignment.spaceAround,
             children: [
-              TemperatureDetailWidget(
-                title: 'Mínima',
-                value: 19,
-              ),
-              TemperatureDetailWidget(
-                title: 'Máxima',
-                value: 45,
-              ),
+              TemperatureDetailWidget(valueType: ValueType.minTemperature),
+              TemperatureDetailWidget(valueType: ValueType.maxTemperature)
             ],
           ),
         ),
       ),
-    );
-  }
-}
-
-class CurrentTempWidget extends StatelessWidget {
-  const CurrentTempWidget({
-    super.key,
-  });
-
-  @override
-  Widget build(BuildContext context) {
-    final textTheme = Theme.of(context).textTheme;
-
-    return BlocBuilder<WeatherCubit, WeatherState>(
-      builder: (context, state) {
-        if (state is WeatherSuccess) {
-          return RichText(
-            text: TextSpan(
-              text: state.weather.temperature.toStringAsFixed(0),
-              style: textTheme.displayLarge,
-              children: [
-                TextSpan(
-                  text: '°C',
-                  style: textTheme.bodyLarge,
-                ),
-              ],
-            ),
-          );
-        }
-
-        if (state is WeatherLoading) {
-          return const CircularProgressIndicator();
-        }
-
-        if (state is WeatherFailure) {
-          return Text(state.message);
-        }
-
-        return const SizedBox.shrink();
-      },
-    );
-  }
-}
-
-class CityNameWidget extends StatelessWidget {
-  const CityNameWidget({super.key});
-
-  @override
-  Widget build(BuildContext context) {
-    return BlocBuilder<WeatherCubit, WeatherState>(
-      builder: (context, state) {
-        return switch (state) {
-          WeatherLoading() => const LinearProgressIndicator(),
-          WeatherSuccess(:final weather) => Text(weather.city!.addressFull),
-          WeatherFailure(:final message) => Text(message),
-        };
-      },
-    );
-  }
-}
-
-class TemperatureDetailWidget extends StatelessWidget {
-  final String title;
-  final double value;
-  final String? type;
-
-  const TemperatureDetailWidget({
-    super.key,
-    required this.title,
-    required this.value,
-    this.type = '°C',
-  });
-
-  @override
-  Widget build(BuildContext context) {
-    final textTheme = Theme.of(context).textTheme;
-
-    return Column(
-      children: [
-        Text(
-          title,
-          style: textTheme.bodySmall,
-        ),
-        Text.rich(
-          TextSpan(
-            text: value.toStringAsFixed(0),
-            children: [
-              TextSpan(
-                text: type,
-                style: textTheme.bodySmall,
-              ),
-            ],
-          ),
-          style: textTheme.titleMedium,
-        ),
-      ],
     );
   }
 }
