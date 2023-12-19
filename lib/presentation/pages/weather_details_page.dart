@@ -1,11 +1,9 @@
-import 'package:consultar_clima/presentation/pages/widgets/temperature_detail_widget.dart';
-import 'package:consultar_clima/presentation/pages/widgets/value_type_enum.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
 import '../../domain/entities/entities.dart';
 import '../../main/factories/factories.dart';
 import '../bloc/bloc.dart';
-import 'widgets/city_name_widgets.dart';
+import 'widgets/widgets.dart';
 
 class WeatherDetailPage extends StatefulWidget {
   final CityEntity city;
