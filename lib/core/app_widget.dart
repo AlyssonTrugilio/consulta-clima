@@ -14,7 +14,7 @@ class AppWidget extends StatelessWidget {
       theme: ThemeData(
           useMaterial3: true,
           colorScheme: ColorScheme.fromSeed(
-              seedColor: Colors.deepOrange, brightness: Brightness.dark)),
+              seedColor: Colors.blue, brightness: Brightness.dark)),
       initialRoute: '/splash',
       onGenerateRoute: (setting) {
         switch (setting.name) {

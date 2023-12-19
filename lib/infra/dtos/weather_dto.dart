@@ -13,6 +13,7 @@ extension WeatherDto on WeatherEntity {
       maxTemperature: (mainMap['temp_max'] as num).toDouble(),
       humidity: (mainMap['humidity'] as num).toDouble(),
       thermalSensation: (mainMap['feels_like'] as num).toDouble(),
+      city: CityEntity.empty(),
     );
   }
 }

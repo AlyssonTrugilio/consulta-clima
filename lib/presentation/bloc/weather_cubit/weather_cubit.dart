@@ -1,13 +1,16 @@
 import 'package:bloc/bloc.dart';
-import 'package:consultar_clima/domain/domain.dart';
-import 'package:flutter/material.dart';
+import 'package:freezed_annotation/freezed_annotation.dart';
+
+import '../../../domain/domain.dart';
 
 part 'weather_state.dart';
+part 'weather_cubit.freezed.dart';
 
 class WeatherCubit extends Cubit<WeatherState> {
   late WeatherEntity weather;
   final SearchWeatherUseCase searchWeather;
-  WeatherCubit({required this.searchWeather}) : super(const WeatherLoading());
+  WeatherCubit({required this.searchWeather})
+      : super(const WeatherState.loading());
   Future<void> initial({
     required String cityName,
     required String stateName,
@@ -15,7 +18,7 @@ class WeatherCubit extends Cubit<WeatherState> {
     required double latitude,
     required double longitude,
   }) async {
-    emit(const WeatherLoading());
+    emit(const WeatherState.loading());
 
     try {
       final response = await searchWeather(
@@ -26,19 +29,19 @@ class WeatherCubit extends Cubit<WeatherState> {
         longitude: longitude,
       );
       weather = response;
-      emit(WeatherSuccess(weather: response));
+      emit(WeatherState.success(weather: response));
     } catch (e) {
-      emit(WeatherFailure(message: e.toString()));
+      emit(WeatherState.failure(message: e.toString()));
     }
   }
 
   Future<void> refreshData() async {
     await initial(
-        cityName: weather.city!.name,
-        stateName: weather.city!.state,
-        countryName: weather.city!.country,
-        latitude: weather.city!.latitude,
-        longitude: weather.city!.longitude);
+        cityName: weather.city.name,
+        stateName: weather.city.state,
+        countryName: weather.city.country,
+        latitude: weather.city.latitude,
+        longitude: weather.city.longitude);
   }
 
   void newConsult() {}

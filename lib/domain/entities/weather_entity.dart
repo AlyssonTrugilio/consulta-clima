@@ -1,38 +1,19 @@
-// ignore_for_file: public_member_api_docs, sort_constructors_first
-import 'package:consultar_clima/domain/entities/entities.dart';
+import 'package:freezed_annotation/freezed_annotation.dart';
 
-class WeatherEntity {
-  final double temperature;
-  final double minTemperature;
-  final double maxTemperature;
-  final double humidity;
-  final double thermalSensation;
-  final CityEntity? city;
+import 'city_entity.dart';
 
-  const WeatherEntity({
-    required this.temperature,
-    required this.minTemperature,
-    required this.maxTemperature,
-    required this.humidity,
-    required this.thermalSensation,
-    this.city,
-  });
+part 'weather_entity.freezed.dart';
 
-  WeatherEntity copyWith({
-    double? temperature,
-    double? minTemperature,
-    double? maxTemperature,
-    double? humidity,
-    double? thermalSensation,
-    CityEntity? city,
-  }) {
-    return WeatherEntity(
-      temperature: temperature ?? this.temperature,
-      minTemperature: minTemperature ?? this.minTemperature,
-      maxTemperature: maxTemperature ?? this.maxTemperature,
-      humidity: humidity ?? this.humidity,
-      thermalSensation: thermalSensation ?? this.thermalSensation,
-      city: city ?? this.city,
-    );
-  }
+@freezed
+class WeatherEntity with _$WeatherEntity {
+  const factory WeatherEntity({
+    required double temperature,
+    required double minTemperature,
+    required double maxTemperature,
+    required double humidity,
+    required double thermalSensation,
+    required CityEntity city,
+  }) = _WeatherEntity;
+
+  const WeatherEntity._();
 }

@@ -35,7 +35,7 @@ class _SearchCityPageState extends State<SearchCityPage> {
         padding: const EdgeInsets.all(20),
         child: SingleChildScrollView(
           child: Column(
-            crossAxisAlignment: CrossAxisAlignment.center,
+            crossAxisAlignment: CrossAxisAlignment.stretch,
             children: [
               Text(
                 'Consultar Clima',
@@ -104,8 +104,7 @@ class _SearchCityPageState extends State<SearchCityPage> {
                       itemBuilder: (context, index) {
                         return ListTile(
                           onTap: () {
-                            Navigator.of(context).pushReplacementNamed(
-                                '/weather-detail',
+                            Navigator.of(context).pushNamed('/weather-detail',
                                 arguments: state.cities[index]);
                           },
                           title: Text(state.cities[index].name),
