@@ -1,25 +1,22 @@
 part of 'city_bloc.dart';
 
-abstract interface class CityState {
-  const CityState();
-}
+@freezed
 
-class InitialCityState extends CityState {
-  const InitialCityState();
-}
+class CityState with _$CityState {
+  const factory CityState({
+    required String searchField,
+    required List<CityEntity> cities,
+    required String errorMessage,
+    required bool isLoading,
+  }) = _CityState;
 
-class LoadingCityState extends CityState {
-  const LoadingCityState();
-}
-
-class DataCityState extends CityState {
-  final List<CityEntity> cities;
-
-  DataCityState({required this.cities});
-}
-
-class ErrorCityState extends CityState {
-  final String message;
-
-  ErrorCityState({required this.message});
+  factory CityState.initial() {
+    return const CityState(
+      searchField: '',
+      cities: [],
+      errorMessage: '',
+      isLoading: false,
+    );
+  }
+  const CityState._();
 }
