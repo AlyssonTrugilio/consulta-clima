@@ -1,4 +1,5 @@
 import 'package:consultar_clima/main/factories/bloc/city_bloc_factory.dart';
+import 'package:dartz/dartz.dart' as dartz;
 import 'package:flutter/material.dart';
 import '../bloc/city_bloc/city_bloc.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
@@ -69,22 +70,46 @@ class CityListWidget extends StatelessWidget {
     return BlocConsumer<CityBloc, CityState>(
       bloc: cityBloc,
       listenWhen: (previous, current) {
-        return (previous.errorMessage != current.errorMessage) &&
-            current.errorMessage.isNotEmpty;
+        return current.failureOrSuccess.isSome();
       },
       listener: (context, state) {
+        final isFailure = state.failureOrSuccess.fold(
+          () => true,
+          (leftOrRigth) => leftOrRigth.isLeft(),
+        );
+
+        final message = state.failureOrSuccess.fold(
+          () => '',
+          (leftOrRigth) => leftOrRigth.fold(dartz.id, (success) => success),
+        );
         final snackBar = SnackBar(
-          content: Text(state.errorMessage),
-          backgroundColor: Colors.red.shade400,
-          shape: RoundedRectangleBorder(
-            side: const BorderSide(color: Colors.black87, width: 2),
-            borderRadius: BorderRadius.circular(28),
+          content: Text(
+            message,
+            style: const TextStyle(
+              color: Colors.black,
+            ),
+          ),
+          backgroundColor: isFailure ? Colors.red[400] : Colors.green[400],
+          shape: const RoundedRectangleBorder(
+            side: BorderSide(
+              color: Colors.black87,
+              width: 1,
+            ),
+            borderRadius: BorderRadius.only(
+              topLeft: Radius.circular(28),
+              topRight: Radius.circular(28),
+            ),
           ),
           margin: const EdgeInsets.symmetric(
             horizontal: 8,
             vertical: 15,
           ),
           behavior: SnackBarBehavior.floating,
+          action: SnackBarAction(
+            label: 'Fechar',
+            backgroundColor: Colors.black,
+            onPressed: () {},
+          ),
         );
 
         ScaffoldMessenger.of(context).showSnackBar(snackBar);
@@ -153,7 +178,7 @@ class _ConsultButtonWidgetState extends State<ConsultButtonWidget> {
         return FilledButton(
           child: const Text(('Consultar')),
           onPressed: () {
-            cityBloc.add(const SeachrConsuled());
+            cityBloc.add(const CityEvent.seachrConsulted());
           },
         );
       },
@@ -202,7 +227,7 @@ class _SearchFieldWidgetState extends State<SearchFieldWidget> {
           readOnly: state.isLoading,
           controller: searchController,
           onChanged: (value) {
-            cityBloc.add(SearchChanged(value: value));
+            cityBloc.add(CityEvent.searchChanged(value: value));
           },
           decoration: InputDecoration(
             border: const OutlineInputBorder(),
@@ -211,7 +236,7 @@ class _SearchFieldWidgetState extends State<SearchFieldWidget> {
               icon: const Icon(Icons.close),
               tooltip: "Limpar consultaConsultar",
               onPressed: () {
-                cityBloc.add(const SearchCleaned());
+                cityBloc.add(const CityEvent.searchCleaned());
               },
             ),
           ),

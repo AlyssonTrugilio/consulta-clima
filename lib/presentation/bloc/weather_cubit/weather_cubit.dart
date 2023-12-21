@@ -20,19 +20,28 @@ class WeatherCubit extends Cubit<WeatherState> {
   }) async {
     emit(const WeatherState.loading());
 
-    try {
-      final response = await searchWeather(
-        city: cityName,
-        state: stateName,
-        country: countryName,
-        latitude: latitude,
-        longitude: longitude,
+    final response = await searchWeather(
+      city: cityName,
+      state: stateName,
+      country: countryName,
+      latitude: latitude,
+      longitude: longitude,
+    );
+    response.fold((failure) {
+      emit(
+        WeatherState.failure(
+          message: failure.map(
+              noLocationGiven: (_) => 'Nenhuma localização foi encontrada',
+              noValidCityReported: (_) =>
+                  'Nenhuma cidade validada foi informada',
+              unexpected: (_) =>
+                  'Ocorreu um erro inesperado. Favor entrar em contato com o suporte'),
+        ),
       );
-      weather = response;
-      emit(WeatherState.success(weather: response));
-    } catch (e) {
-      emit(WeatherState.failure(message: e.toString()));
-    }
+    }, (newWeather) {
+      weather = newWeather;
+      emit(WeatherState.success(weather: newWeather));
+    });
   }
 
   Future<void> refreshData() async {

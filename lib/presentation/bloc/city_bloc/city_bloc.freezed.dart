@@ -15,11 +15,437 @@ final _privateConstructorUsedError = UnsupportedError(
     'It seems like you constructed your class using `MyClass._()`. This constructor is only meant to be used by freezed and you are not supposed to need it nor use it.\nPlease check the documentation here for more information: https://github.com/rrousselGit/freezed#custom-getters-and-methods');
 
 /// @nodoc
+mixin _$CityEvent {
+  @optionalTypeArgs
+  TResult when<TResult extends Object?>({
+    required TResult Function(String value) searchChanged,
+    required TResult Function() searchCleaned,
+    required TResult Function() seachrConsulted,
+  }) =>
+      throw _privateConstructorUsedError;
+  @optionalTypeArgs
+  TResult? whenOrNull<TResult extends Object?>({
+    TResult? Function(String value)? searchChanged,
+    TResult? Function()? searchCleaned,
+    TResult? Function()? seachrConsulted,
+  }) =>
+      throw _privateConstructorUsedError;
+  @optionalTypeArgs
+  TResult maybeWhen<TResult extends Object?>({
+    TResult Function(String value)? searchChanged,
+    TResult Function()? searchCleaned,
+    TResult Function()? seachrConsulted,
+    required TResult orElse(),
+  }) =>
+      throw _privateConstructorUsedError;
+  @optionalTypeArgs
+  TResult map<TResult extends Object?>({
+    required TResult Function(_SeachChanged value) searchChanged,
+    required TResult Function(_SearchCleaned value) searchCleaned,
+    required TResult Function(_SeachrConsulted value) seachrConsulted,
+  }) =>
+      throw _privateConstructorUsedError;
+  @optionalTypeArgs
+  TResult? mapOrNull<TResult extends Object?>({
+    TResult? Function(_SeachChanged value)? searchChanged,
+    TResult? Function(_SearchCleaned value)? searchCleaned,
+    TResult? Function(_SeachrConsulted value)? seachrConsulted,
+  }) =>
+      throw _privateConstructorUsedError;
+  @optionalTypeArgs
+  TResult maybeMap<TResult extends Object?>({
+    TResult Function(_SeachChanged value)? searchChanged,
+    TResult Function(_SearchCleaned value)? searchCleaned,
+    TResult Function(_SeachrConsulted value)? seachrConsulted,
+    required TResult orElse(),
+  }) =>
+      throw _privateConstructorUsedError;
+}
+
+/// @nodoc
+abstract class $CityEventCopyWith<$Res> {
+  factory $CityEventCopyWith(CityEvent value, $Res Function(CityEvent) then) =
+      _$CityEventCopyWithImpl<$Res, CityEvent>;
+}
+
+/// @nodoc
+class _$CityEventCopyWithImpl<$Res, $Val extends CityEvent>
+    implements $CityEventCopyWith<$Res> {
+  _$CityEventCopyWithImpl(this._value, this._then);
+
+  // ignore: unused_field
+  final $Val _value;
+  // ignore: unused_field
+  final $Res Function($Val) _then;
+}
+
+/// @nodoc
+abstract class _$$SeachChangedImplCopyWith<$Res> {
+  factory _$$SeachChangedImplCopyWith(
+          _$SeachChangedImpl value, $Res Function(_$SeachChangedImpl) then) =
+      __$$SeachChangedImplCopyWithImpl<$Res>;
+  @useResult
+  $Res call({String value});
+}
+
+/// @nodoc
+class __$$SeachChangedImplCopyWithImpl<$Res>
+    extends _$CityEventCopyWithImpl<$Res, _$SeachChangedImpl>
+    implements _$$SeachChangedImplCopyWith<$Res> {
+  __$$SeachChangedImplCopyWithImpl(
+      _$SeachChangedImpl _value, $Res Function(_$SeachChangedImpl) _then)
+      : super(_value, _then);
+
+  @pragma('vm:prefer-inline')
+  @override
+  $Res call({
+    Object? value = null,
+  }) {
+    return _then(_$SeachChangedImpl(
+      value: null == value
+          ? _value.value
+          : value // ignore: cast_nullable_to_non_nullable
+              as String,
+    ));
+  }
+}
+
+/// @nodoc
+
+class _$SeachChangedImpl extends _SeachChanged {
+  const _$SeachChangedImpl({required this.value}) : super._();
+
+  @override
+  final String value;
+
+  @override
+  String toString() {
+    return 'CityEvent.searchChanged(value: $value)';
+  }
+
+  @override
+  bool operator ==(Object other) {
+    return identical(this, other) ||
+        (other.runtimeType == runtimeType &&
+            other is _$SeachChangedImpl &&
+            (identical(other.value, value) || other.value == value));
+  }
+
+  @override
+  int get hashCode => Object.hash(runtimeType, value);
+
+  @JsonKey(ignore: true)
+  @override
+  @pragma('vm:prefer-inline')
+  _$$SeachChangedImplCopyWith<_$SeachChangedImpl> get copyWith =>
+      __$$SeachChangedImplCopyWithImpl<_$SeachChangedImpl>(this, _$identity);
+
+  @override
+  @optionalTypeArgs
+  TResult when<TResult extends Object?>({
+    required TResult Function(String value) searchChanged,
+    required TResult Function() searchCleaned,
+    required TResult Function() seachrConsulted,
+  }) {
+    return searchChanged(value);
+  }
+
+  @override
+  @optionalTypeArgs
+  TResult? whenOrNull<TResult extends Object?>({
+    TResult? Function(String value)? searchChanged,
+    TResult? Function()? searchCleaned,
+    TResult? Function()? seachrConsulted,
+  }) {
+    return searchChanged?.call(value);
+  }
+
+  @override
+  @optionalTypeArgs
+  TResult maybeWhen<TResult extends Object?>({
+    TResult Function(String value)? searchChanged,
+    TResult Function()? searchCleaned,
+    TResult Function()? seachrConsulted,
+    required TResult orElse(),
+  }) {
+    if (searchChanged != null) {
+      return searchChanged(value);
+    }
+    return orElse();
+  }
+
+  @override
+  @optionalTypeArgs
+  TResult map<TResult extends Object?>({
+    required TResult Function(_SeachChanged value) searchChanged,
+    required TResult Function(_SearchCleaned value) searchCleaned,
+    required TResult Function(_SeachrConsulted value) seachrConsulted,
+  }) {
+    return searchChanged(this);
+  }
+
+  @override
+  @optionalTypeArgs
+  TResult? mapOrNull<TResult extends Object?>({
+    TResult? Function(_SeachChanged value)? searchChanged,
+    TResult? Function(_SearchCleaned value)? searchCleaned,
+    TResult? Function(_SeachrConsulted value)? seachrConsulted,
+  }) {
+    return searchChanged?.call(this);
+  }
+
+  @override
+  @optionalTypeArgs
+  TResult maybeMap<TResult extends Object?>({
+    TResult Function(_SeachChanged value)? searchChanged,
+    TResult Function(_SearchCleaned value)? searchCleaned,
+    TResult Function(_SeachrConsulted value)? seachrConsulted,
+    required TResult orElse(),
+  }) {
+    if (searchChanged != null) {
+      return searchChanged(this);
+    }
+    return orElse();
+  }
+}
+
+abstract class _SeachChanged extends CityEvent {
+  const factory _SeachChanged({required final String value}) =
+      _$SeachChangedImpl;
+  const _SeachChanged._() : super._();
+
+  String get value;
+  @JsonKey(ignore: true)
+  _$$SeachChangedImplCopyWith<_$SeachChangedImpl> get copyWith =>
+      throw _privateConstructorUsedError;
+}
+
+/// @nodoc
+abstract class _$$SearchCleanedImplCopyWith<$Res> {
+  factory _$$SearchCleanedImplCopyWith(
+          _$SearchCleanedImpl value, $Res Function(_$SearchCleanedImpl) then) =
+      __$$SearchCleanedImplCopyWithImpl<$Res>;
+}
+
+/// @nodoc
+class __$$SearchCleanedImplCopyWithImpl<$Res>
+    extends _$CityEventCopyWithImpl<$Res, _$SearchCleanedImpl>
+    implements _$$SearchCleanedImplCopyWith<$Res> {
+  __$$SearchCleanedImplCopyWithImpl(
+      _$SearchCleanedImpl _value, $Res Function(_$SearchCleanedImpl) _then)
+      : super(_value, _then);
+}
+
+/// @nodoc
+
+class _$SearchCleanedImpl extends _SearchCleaned {
+  const _$SearchCleanedImpl() : super._();
+
+  @override
+  String toString() {
+    return 'CityEvent.searchCleaned()';
+  }
+
+  @override
+  bool operator ==(Object other) {
+    return identical(this, other) ||
+        (other.runtimeType == runtimeType && other is _$SearchCleanedImpl);
+  }
+
+  @override
+  int get hashCode => runtimeType.hashCode;
+
+  @override
+  @optionalTypeArgs
+  TResult when<TResult extends Object?>({
+    required TResult Function(String value) searchChanged,
+    required TResult Function() searchCleaned,
+    required TResult Function() seachrConsulted,
+  }) {
+    return searchCleaned();
+  }
+
+  @override
+  @optionalTypeArgs
+  TResult? whenOrNull<TResult extends Object?>({
+    TResult? Function(String value)? searchChanged,
+    TResult? Function()? searchCleaned,
+    TResult? Function()? seachrConsulted,
+  }) {
+    return searchCleaned?.call();
+  }
+
+  @override
+  @optionalTypeArgs
+  TResult maybeWhen<TResult extends Object?>({
+    TResult Function(String value)? searchChanged,
+    TResult Function()? searchCleaned,
+    TResult Function()? seachrConsulted,
+    required TResult orElse(),
+  }) {
+    if (searchCleaned != null) {
+      return searchCleaned();
+    }
+    return orElse();
+  }
+
+  @override
+  @optionalTypeArgs
+  TResult map<TResult extends Object?>({
+    required TResult Function(_SeachChanged value) searchChanged,
+    required TResult Function(_SearchCleaned value) searchCleaned,
+    required TResult Function(_SeachrConsulted value) seachrConsulted,
+  }) {
+    return searchCleaned(this);
+  }
+
+  @override
+  @optionalTypeArgs
+  TResult? mapOrNull<TResult extends Object?>({
+    TResult? Function(_SeachChanged value)? searchChanged,
+    TResult? Function(_SearchCleaned value)? searchCleaned,
+    TResult? Function(_SeachrConsulted value)? seachrConsulted,
+  }) {
+    return searchCleaned?.call(this);
+  }
+
+  @override
+  @optionalTypeArgs
+  TResult maybeMap<TResult extends Object?>({
+    TResult Function(_SeachChanged value)? searchChanged,
+    TResult Function(_SearchCleaned value)? searchCleaned,
+    TResult Function(_SeachrConsulted value)? seachrConsulted,
+    required TResult orElse(),
+  }) {
+    if (searchCleaned != null) {
+      return searchCleaned(this);
+    }
+    return orElse();
+  }
+}
+
+abstract class _SearchCleaned extends CityEvent {
+  const factory _SearchCleaned() = _$SearchCleanedImpl;
+  const _SearchCleaned._() : super._();
+}
+
+/// @nodoc
+abstract class _$$SeachrConsultedImplCopyWith<$Res> {
+  factory _$$SeachrConsultedImplCopyWith(_$SeachrConsultedImpl value,
+          $Res Function(_$SeachrConsultedImpl) then) =
+      __$$SeachrConsultedImplCopyWithImpl<$Res>;
+}
+
+/// @nodoc
+class __$$SeachrConsultedImplCopyWithImpl<$Res>
+    extends _$CityEventCopyWithImpl<$Res, _$SeachrConsultedImpl>
+    implements _$$SeachrConsultedImplCopyWith<$Res> {
+  __$$SeachrConsultedImplCopyWithImpl(
+      _$SeachrConsultedImpl _value, $Res Function(_$SeachrConsultedImpl) _then)
+      : super(_value, _then);
+}
+
+/// @nodoc
+
+class _$SeachrConsultedImpl extends _SeachrConsulted {
+  const _$SeachrConsultedImpl() : super._();
+
+  @override
+  String toString() {
+    return 'CityEvent.seachrConsulted()';
+  }
+
+  @override
+  bool operator ==(Object other) {
+    return identical(this, other) ||
+        (other.runtimeType == runtimeType && other is _$SeachrConsultedImpl);
+  }
+
+  @override
+  int get hashCode => runtimeType.hashCode;
+
+  @override
+  @optionalTypeArgs
+  TResult when<TResult extends Object?>({
+    required TResult Function(String value) searchChanged,
+    required TResult Function() searchCleaned,
+    required TResult Function() seachrConsulted,
+  }) {
+    return seachrConsulted();
+  }
+
+  @override
+  @optionalTypeArgs
+  TResult? whenOrNull<TResult extends Object?>({
+    TResult? Function(String value)? searchChanged,
+    TResult? Function()? searchCleaned,
+    TResult? Function()? seachrConsulted,
+  }) {
+    return seachrConsulted?.call();
+  }
+
+  @override
+  @optionalTypeArgs
+  TResult maybeWhen<TResult extends Object?>({
+    TResult Function(String value)? searchChanged,
+    TResult Function()? searchCleaned,
+    TResult Function()? seachrConsulted,
+    required TResult orElse(),
+  }) {
+    if (seachrConsulted != null) {
+      return seachrConsulted();
+    }
+    return orElse();
+  }
+
+  @override
+  @optionalTypeArgs
+  TResult map<TResult extends Object?>({
+    required TResult Function(_SeachChanged value) searchChanged,
+    required TResult Function(_SearchCleaned value) searchCleaned,
+    required TResult Function(_SeachrConsulted value) seachrConsulted,
+  }) {
+    return seachrConsulted(this);
+  }
+
+  @override
+  @optionalTypeArgs
+  TResult? mapOrNull<TResult extends Object?>({
+    TResult? Function(_SeachChanged value)? searchChanged,
+    TResult? Function(_SearchCleaned value)? searchCleaned,
+    TResult? Function(_SeachrConsulted value)? seachrConsulted,
+  }) {
+    return seachrConsulted?.call(this);
+  }
+
+  @override
+  @optionalTypeArgs
+  TResult maybeMap<TResult extends Object?>({
+    TResult Function(_SeachChanged value)? searchChanged,
+    TResult Function(_SearchCleaned value)? searchCleaned,
+    TResult Function(_SeachrConsulted value)? seachrConsulted,
+    required TResult orElse(),
+  }) {
+    if (seachrConsulted != null) {
+      return seachrConsulted(this);
+    }
+    return orElse();
+  }
+}
+
+abstract class _SeachrConsulted extends CityEvent {
+  const factory _SeachrConsulted() = _$SeachrConsultedImpl;
+  const _SeachrConsulted._() : super._();
+}
+
+/// @nodoc
 mixin _$CityState {
   String get searchField => throw _privateConstructorUsedError;
   List<CityEntity> get cities => throw _privateConstructorUsedError;
   String get errorMessage => throw _privateConstructorUsedError;
   bool get isLoading => throw _privateConstructorUsedError;
+  Option<Either<String, String>> get failureOrSuccess =>
+      throw _privateConstructorUsedError;
 
   @JsonKey(ignore: true)
   $CityStateCopyWith<CityState> get copyWith =>
@@ -35,7 +461,8 @@ abstract class $CityStateCopyWith<$Res> {
       {String searchField,
       List<CityEntity> cities,
       String errorMessage,
-      bool isLoading});
+      bool isLoading,
+      Option<Either<String, String>> failureOrSuccess});
 }
 
 /// @nodoc
@@ -55,6 +482,7 @@ class _$CityStateCopyWithImpl<$Res, $Val extends CityState>
     Object? cities = null,
     Object? errorMessage = null,
     Object? isLoading = null,
+    Object? failureOrSuccess = null,
   }) {
     return _then(_value.copyWith(
       searchField: null == searchField
@@ -73,6 +501,10 @@ class _$CityStateCopyWithImpl<$Res, $Val extends CityState>
           ? _value.isLoading
           : isLoading // ignore: cast_nullable_to_non_nullable
               as bool,
+      failureOrSuccess: null == failureOrSuccess
+          ? _value.failureOrSuccess
+          : failureOrSuccess // ignore: cast_nullable_to_non_nullable
+              as Option<Either<String, String>>,
     ) as $Val);
   }
 }
@@ -89,7 +521,8 @@ abstract class _$$CityStateImplCopyWith<$Res>
       {String searchField,
       List<CityEntity> cities,
       String errorMessage,
-      bool isLoading});
+      bool isLoading,
+      Option<Either<String, String>> failureOrSuccess});
 }
 
 /// @nodoc
@@ -107,6 +540,7 @@ class __$$CityStateImplCopyWithImpl<$Res>
     Object? cities = null,
     Object? errorMessage = null,
     Object? isLoading = null,
+    Object? failureOrSuccess = null,
   }) {
     return _then(_$CityStateImpl(
       searchField: null == searchField
@@ -125,6 +559,10 @@ class __$$CityStateImplCopyWithImpl<$Res>
           ? _value.isLoading
           : isLoading // ignore: cast_nullable_to_non_nullable
               as bool,
+      failureOrSuccess: null == failureOrSuccess
+          ? _value.failureOrSuccess
+          : failureOrSuccess // ignore: cast_nullable_to_non_nullable
+              as Option<Either<String, String>>,
     ));
   }
 }
@@ -136,7 +574,8 @@ class _$CityStateImpl extends _CityState {
       {required this.searchField,
       required final List<CityEntity> cities,
       required this.errorMessage,
-      required this.isLoading})
+      required this.isLoading,
+      required this.failureOrSuccess})
       : _cities = cities,
         super._();
 
@@ -154,10 +593,12 @@ class _$CityStateImpl extends _CityState {
   final String errorMessage;
   @override
   final bool isLoading;
+  @override
+  final Option<Either<String, String>> failureOrSuccess;
 
   @override
   String toString() {
-    return 'CityState(searchField: $searchField, cities: $cities, errorMessage: $errorMessage, isLoading: $isLoading)';
+    return 'CityState(searchField: $searchField, cities: $cities, errorMessage: $errorMessage, isLoading: $isLoading, failureOrSuccess: $failureOrSuccess)';
   }
 
   @override
@@ -171,12 +612,19 @@ class _$CityStateImpl extends _CityState {
             (identical(other.errorMessage, errorMessage) ||
                 other.errorMessage == errorMessage) &&
             (identical(other.isLoading, isLoading) ||
-                other.isLoading == isLoading));
+                other.isLoading == isLoading) &&
+            (identical(other.failureOrSuccess, failureOrSuccess) ||
+                other.failureOrSuccess == failureOrSuccess));
   }
 
   @override
-  int get hashCode => Object.hash(runtimeType, searchField,
-      const DeepCollectionEquality().hash(_cities), errorMessage, isLoading);
+  int get hashCode => Object.hash(
+      runtimeType,
+      searchField,
+      const DeepCollectionEquality().hash(_cities),
+      errorMessage,
+      isLoading,
+      failureOrSuccess);
 
   @JsonKey(ignore: true)
   @override
@@ -187,10 +635,12 @@ class _$CityStateImpl extends _CityState {
 
 abstract class _CityState extends CityState {
   const factory _CityState(
-      {required final String searchField,
-      required final List<CityEntity> cities,
-      required final String errorMessage,
-      required final bool isLoading}) = _$CityStateImpl;
+          {required final String searchField,
+          required final List<CityEntity> cities,
+          required final String errorMessage,
+          required final bool isLoading,
+          required final Option<Either<String, String>> failureOrSuccess}) =
+      _$CityStateImpl;
   const _CityState._() : super._();
 
   @override
@@ -201,6 +651,8 @@ abstract class _CityState extends CityState {
   String get errorMessage;
   @override
   bool get isLoading;
+  @override
+  Option<Either<String, String>> get failureOrSuccess;
   @override
   @JsonKey(ignore: true)
   _$$CityStateImplCopyWith<_$CityStateImpl> get copyWith =>

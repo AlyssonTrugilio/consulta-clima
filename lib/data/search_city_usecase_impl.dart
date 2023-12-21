@@ -1,3 +1,5 @@
+import 'package:dartz/dartz.dart';
+
 import '../domain/domain.dart';
 
 class SearchCityUseCaseImpl implements SearchCityUseCase {
@@ -7,20 +9,22 @@ class SearchCityUseCaseImpl implements SearchCityUseCase {
     required this.repository,
   });
 
-  
-
   @override
-  Future<List<CityEntity>> call({required String input}) async {
+  SearchCityOutput call({required String input}) async {
     if (input.isEmpty) {
-      throw Exception('Nenhuma ciadade informada');
+      return left(const CityFailure.noCityReported());
     }
 
-   final cities = await repository.searchByname(search: input);
+    final response = await repository.searchByname(search: input);
 
-  if(cities.isEmpty){
-     throw Exception('Nenhuma cidade foi encontrada');
-  }
-
-    return cities;
+    return response.fold(
+      (failure) => left(failure),
+      (cities) {
+        if (cities.isEmpty) {
+          return left(const CityFailure.notFound());
+        }
+        return right(cities);
+      },
+    );
   }
 }

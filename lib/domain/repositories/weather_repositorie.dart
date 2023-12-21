@@ -1,7 +1,9 @@
+import 'package:consultar_clima/domain/domain.dart';
+import 'package:dartz/dartz.dart';
 
-import '../entities/entities.dart';
+typedef SearchByLocationOutput = Future<Either<WeatherFailure, WeatherEntity>>;
 
 abstract interface class WeatherRepository {
-  Future<WeatherEntity> searchByLocation(
+  SearchByLocationOutput searchByLocation(
       {required double latitude, required double longitude});
 }

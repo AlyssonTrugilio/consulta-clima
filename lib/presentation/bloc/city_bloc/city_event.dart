@@ -1,19 +1,12 @@
 part of 'city_bloc.dart';
 
-abstract interface class CityEvent {
-  const CityEvent();
-}
 
-class SearchChanged extends CityEvent {
-  final String value;
-
-  SearchChanged({required this.value});
-}
-
-class SearchCleaned extends CityEvent {
-  const SearchCleaned();
-}
-
-class SeachrConsuled extends CityEvent {
-  const SeachrConsuled();
+@freezed
+class CityEvent with _$CityEvent{
+  const factory CityEvent.searchChanged({
+    required String value,
+  }) = _SeachChanged;
+  const factory CityEvent.searchCleaned() = _SearchCleaned;
+  const factory CityEvent.seachrConsulted() = _SeachrConsulted;
+  const CityEvent._();
 }
