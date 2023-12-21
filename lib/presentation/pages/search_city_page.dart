@@ -1,5 +1,5 @@
+import 'package:consultar_clima/main/factories/bloc/city_bloc_factory.dart';
 import 'package:flutter/material.dart';
-import '../../main/main.dart';
 import '../bloc/city_bloc/city_bloc.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
 
@@ -11,6 +11,19 @@ class SearchCityPage extends StatefulWidget {
 }
 
 class _SearchCityPageState extends State<SearchCityPage> {
+  late final CityBloc cityBloc;
+  @override
+  void initState() {
+    cityBloc = cityBlocFactory();
+    super.initState();
+  }
+
+  @override
+  void dispose() {
+    cityBloc.close();
+    super.dispose();
+  }
+
   @override
   Widget build(BuildContext context) {
     return BlocProvider.value(
@@ -28,9 +41,9 @@ class _SearchCityPageState extends State<SearchCityPage> {
                   textAlign: TextAlign.center,
                 ),
                 const SizedBox(height: 50),
-                SearchFieldWidget(cityBloc: cityBloc),
+                const SearchFieldWidget(),
                 const SizedBox(height: 25),
-                ConsultButtonWidget(cityBloc: cityBloc),
+                const ConsultButtonWidget(),
                 const SizedBox(height: 50),
                 CityListWidget(cityBloc: cityBloc)
               ],
@@ -52,33 +65,65 @@ class CityListWidget extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
-    return BlocBuilder<CityBloc, CityState>(
+    final cityBloc = context.read<CityBloc>();
+    return BlocConsumer<CityBloc, CityState>(
       bloc: cityBloc,
+      listenWhen: (previous, current) {
+        return (previous.errorMessage != current.errorMessage) &&
+            current.errorMessage.isNotEmpty;
+      },
+      listener: (context, state) {
+        final snackBar = SnackBar(
+          content: Text(state.errorMessage),
+          backgroundColor: Colors.red.shade400,
+          shape: RoundedRectangleBorder(
+            side: const BorderSide(color: Colors.black87, width: 2),
+            borderRadius: BorderRadius.circular(28),
+          ),
+          margin: const EdgeInsets.symmetric(
+            horizontal: 8,
+            vertical: 15,
+          ),
+          behavior: SnackBarBehavior.floating,
+        );
+
+        ScaffoldMessenger.of(context).showSnackBar(snackBar);
+      },
+      buildWhen: (previous, current) {
+        return (previous.isLoading != current.isLoading) ||
+            (previous.cities != current.cities);
+      },
       builder: (context, state) {
-        if (state is ErrorCityState) {
-          return Text(state.message);
-        }
-        if (state is DataCityState) {
-          return ListView.separated(
-            shrinkWrap: true,
-            itemCount: state.cities.length,
-            separatorBuilder: (context, index) {
-              return const SizedBox(
-                height: 5,
-              );
-            },
-            itemBuilder: (context, index) {
-              return ListTile(
-                onTap: () {
-                  Navigator.of(context).pushNamed('/weather-detail',
-                      arguments: state.cities[index]);
+        if (state.cities.isNotEmpty) {
+          return Card(
+            margin: EdgeInsets.zero,
+            child: Padding(
+              padding: const EdgeInsets.all(12.0),
+              child: ListView.separated(
+                shrinkWrap: true,
+                itemCount: state.cities.length,
+                separatorBuilder: (context, index) {
+                  return const SizedBox(height: 5);
                 },
-                title: Text(state.cities[index].name),
-                subtitle: Text(state.cities[index].state),
-              );
-            },
+                itemBuilder: (context, index) {
+                  return ListTile(
+                    onTap: () {
+                      Navigator.of(context).pushNamed(
+                        '/weather-detail',
+                        arguments: state.cities[index],
+                      );
+                    },
+                    tileColor: Theme.of(context).cardColor,
+                    title: Text(
+                      '${state.cities[index].name} - ${state.cities[index].state}',
+                    ),
+                  );
+                },
+              ),
+            ),
           );
         }
+
         return const SizedBox.shrink();
       },
     );
@@ -140,7 +185,7 @@ class _SearchFieldWidgetState extends State<SearchFieldWidget> {
 
   @override
   Widget build(BuildContext context) {
-    final cityBloc = context.read<CityBloc>;
+    final cityBloc = context.read<CityBloc>();
 
     return BlocBuilder<CityBloc, CityState>(
       bloc: cityBloc,
