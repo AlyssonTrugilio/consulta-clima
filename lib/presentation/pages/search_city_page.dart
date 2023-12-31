@@ -29,25 +29,27 @@ class _SearchCityPageState extends State<SearchCityPage> {
   Widget build(BuildContext context) {
     return BlocProvider.value(
       value: cityBloc,
-      child: Scaffold(
-        body: Padding(
-          padding: const EdgeInsets.all(20),
-          child: SingleChildScrollView(
-            child: Column(
-              crossAxisAlignment: CrossAxisAlignment.stretch,
-              children: [
-                Text(
-                  'Consultar Clima',
-                  style: Theme.of(context).textTheme.displayMedium,
-                  textAlign: TextAlign.center,
-                ),
-                const SizedBox(height: 50),
-                const SearchFieldWidget(),
-                const SizedBox(height: 25),
-                const ConsultButtonWidget(),
-                const SizedBox(height: 50),
-                CityListWidget(cityBloc: cityBloc)
-              ],
+      child: SafeArea(
+        child: Scaffold(
+          body: Padding(
+            padding: const EdgeInsets.all(20),
+            child: SingleChildScrollView(
+              child: Column(
+                crossAxisAlignment: CrossAxisAlignment.stretch,
+                children: [
+                  Text(
+                    'Consultar Clima',
+                    style: Theme.of(context).textTheme.displayMedium,
+                    textAlign: TextAlign.center,
+                  ),
+                  const SizedBox(height: 50),
+                  const SearchFieldWidget(),
+                  const SizedBox(height: 25),
+                  const ConsultButtonWidget(),
+                  const SizedBox(height: 50),
+                  CityListWidget(cityBloc: cityBloc)
+                ],
+              ),
             ),
           ),
         ),
@@ -234,7 +236,7 @@ class _SearchFieldWidgetState extends State<SearchFieldWidget> {
             hintText: "Digite uma cidade",
             suffixIcon: IconButton(
               icon: const Icon(Icons.close),
-              tooltip: "Limpar consultaConsultar",
+              tooltip: "Limpar consulta",
               onPressed: () {
                 cityBloc.add(const CityEvent.searchCleaned());
               },

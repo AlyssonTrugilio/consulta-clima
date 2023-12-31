@@ -12,8 +12,14 @@ class CityNameWidget extends StatelessWidget {
       builder: (context, state) {
         return state.map(
           loading: (_) => const LinearProgressIndicator(),
-          success: (success) => Text(success.weather.city.addressFull),
-          failure: (failue) => Text(failue.message),
+          success: (success) => Text(
+            success.weather.city.addressFull,
+            style: const TextStyle(fontWeight: FontWeight.bold),
+          ),
+          failure: (failue) => Text(
+            failue.message,
+            style: const TextStyle(fontWeight: FontWeight.bold),
+          ),
         );
       },
     );

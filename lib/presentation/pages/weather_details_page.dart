@@ -48,6 +48,7 @@ class _WeatherDetailPageState extends State<WeatherDetailPage> {
           centerTitle: true,
           title: const CityNameWidget(),
         ),
+        extendBody: true,
         body: const Center(
           child: TemperatureDetailWidget(valueType: ValueType.currentTemp),
         ),
@@ -93,9 +94,11 @@ class _WeatherDetailPageState extends State<WeatherDetailPage> {
             );
           },
         ),
-        bottomNavigationBar: const BottomAppBar(
+        bottomNavigationBar:  BottomAppBar(
           elevation: 8,
-          child: Row(
+          shape: const CircularNotchedRectangle(),
+          color: Theme.of(context).primaryColor,
+          child: const Row(
             mainAxisAlignment: MainAxisAlignment.spaceAround,
             children: [
               TemperatureDetailWidget(valueType: ValueType.minTemperature),
