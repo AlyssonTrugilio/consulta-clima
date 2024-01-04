@@ -37,10 +37,13 @@ class _SearchCityPageState extends State<SearchCityPage> {
               child: Column(
                 crossAxisAlignment: CrossAxisAlignment.stretch,
                 children: [
-                  Text(
-                    'Consultar Clima',
-                    style: Theme.of(context).textTheme.displayMedium,
-                    textAlign: TextAlign.center,
+                  Padding(
+                    padding: const EdgeInsets.only(top: 15),
+                    child: Text(
+                      'Consultar Clima',
+                      style: Theme.of(context).textTheme.displayMedium,
+                      textAlign: TextAlign.center,
+                    ),
                   ),
                   const SizedBox(height: 50),
                   const SearchFieldWidget(),
@@ -91,7 +94,9 @@ class CityListWidget extends StatelessWidget {
               color: Colors.black,
             ),
           ),
-          backgroundColor: isFailure ? Colors.red[400] : Colors.green[400],
+          backgroundColor: isFailure
+              ? const Color.fromARGB(255, 212, 142, 141)
+              : const Color.fromARGB(255, 202, 216, 203),
           shape: const RoundedRectangleBorder(
             side: BorderSide(
               color: Colors.black87,
@@ -108,8 +113,7 @@ class CityListWidget extends StatelessWidget {
           ),
           behavior: SnackBarBehavior.floating,
           action: SnackBarAction(
-            label: 'Fechar',
-            backgroundColor: Colors.black,
+            label: 'OK',
             onPressed: () {},
           ),
         );
@@ -123,9 +127,11 @@ class CityListWidget extends StatelessWidget {
       builder: (context, state) {
         if (state.cities.isNotEmpty) {
           return Card(
+            elevation: 6,
             margin: EdgeInsets.zero,
+            color: Theme.of(context).primaryColor,
             child: Padding(
-              padding: const EdgeInsets.all(12.0),
+              padding: const EdgeInsets.all(10),
               child: ListView.separated(
                 shrinkWrap: true,
                 itemCount: state.cities.length,
@@ -144,6 +150,7 @@ class CityListWidget extends StatelessWidget {
                     title: Text(
                       '${state.cities[index].name} - ${state.cities[index].state}',
                     ),
+                    subtitle: Text(state.cities[index].country),
                   );
                 },
               ),

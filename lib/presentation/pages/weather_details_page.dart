@@ -49,8 +49,10 @@ class _WeatherDetailPageState extends State<WeatherDetailPage> {
           title: const CityNameWidget(),
         ),
         extendBody: true,
-        body: const Center(
-          child: TemperatureDetailWidget(valueType: ValueType.currentTemp),
+        body: Container(
+          child: const Center(
+            child: TemperatureDetailWidget(valueType: ValueType.currentTemp),
+          ),
         ),
         floatingActionButtonLocation: FloatingActionButtonLocation.centerDocked,
         floatingActionButton: FloatingActionButton(
@@ -94,7 +96,7 @@ class _WeatherDetailPageState extends State<WeatherDetailPage> {
             );
           },
         ),
-        bottomNavigationBar:  BottomAppBar(
+        bottomNavigationBar: BottomAppBar(
           elevation: 8,
           shape: const CircularNotchedRectangle(),
           color: Theme.of(context).primaryColor,
