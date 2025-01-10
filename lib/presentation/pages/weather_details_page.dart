@@ -49,53 +49,51 @@ class _WeatherDetailPageState extends State<WeatherDetailPage> {
           title: const CityNameWidget(),
         ),
         extendBody: true,
-        body: Container(
-          child: const Center(
-            child: TemperatureDetailWidget(valueType: ValueType.currentTemp),
-          ),
+        body: const Center(
+          child: TemperatureDetailWidget(valueType: ValueType.currentTemp),
         ),
-        floatingActionButtonLocation: FloatingActionButtonLocation.centerDocked,
-        floatingActionButton: FloatingActionButton(
-          tooltip: 'Mais informações',
-          child: const Icon(Icons.arrow_upward_outlined),
-          onPressed: () {
-            showModalBottomSheet(
-              context: context,
-              builder: (context) {
-                return BlocProvider.value(
-                  value: cubit,
-                  child: const Padding(
-                    padding: EdgeInsets.symmetric(vertical: 30),
-                    child: Column(
-                      mainAxisSize: MainAxisSize.min,
-                      children: [
-                        Row(
-                          mainAxisAlignment: MainAxisAlignment.spaceEvenly,
-                          children: [
-                            TemperatureDetailWidget(
-                                valueType: ValueType.minTemperature),
-                            TemperatureDetailWidget(
-                                valueType: ValueType.maxTemperature),
-                          ],
-                        ),
-                        Divider(),
-                        Row(
-                          mainAxisAlignment: MainAxisAlignment.spaceEvenly,
-                          children: [
-                            TemperatureDetailWidget(
-                                valueType: ValueType.thermalSensation),
-                            TemperatureDetailWidget(
-                                valueType: ValueType.humidity)
-                          ],
-                        ),
-                      ],
-                    ),
-                  ),
-                );
-              },
-            );
-          },
-        ),
+        // floatingActionButtonLocation: FloatingActionButtonLocation.centerDocked,
+        // floatingActionButton: FloatingActionButton(
+        //   tooltip: 'Mais informações',
+        //   child: const Icon(Icons.arrow_upward_outlined),
+        //   onPressed: () {
+        //     showModalBottomSheet(
+        //       context: context,
+        //       builder: (context) {
+        //         return BlocProvider.value(
+        //           value: cubit,
+        //           child: const Padding(
+        //             padding: EdgeInsets.symmetric(vertical: 30),
+        //             child: Column(
+        //               mainAxisSize: MainAxisSize.min,
+        //               children: [
+        //                 Row(
+        //                   mainAxisAlignment: MainAxisAlignment.spaceEvenly,
+        //                   children: [
+        //                     TemperatureDetailWidget(
+        //                         valueType: ValueType.minTemperature),
+        //                     TemperatureDetailWidget(
+        //                         valueType: ValueType.maxTemperature),
+        //                   ],
+        //                 ),
+        //                 Divider(),
+        //                 Row(
+        //                   mainAxisAlignment: MainAxisAlignment.spaceEvenly,
+        //                   children: [
+        //                     TemperatureDetailWidget(
+        //                         valueType: ValueType.thermalSensation),
+        //                     TemperatureDetailWidget(
+        //                         valueType: ValueType.humidity)
+        //                   ],
+        //                 ),
+        //               ],
+        //             ),
+        //           ),
+        //         );
+        //       },
+        //     );
+        //   },
+        // ),
         bottomNavigationBar: BottomAppBar(
           elevation: 8,
           shape: const CircularNotchedRectangle(),
